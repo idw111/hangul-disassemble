@@ -1,12 +1,19 @@
 {
   "name": "hangul-disassemble",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "disassemble hangul text to consonants and vowels",
   "author": {
     "name": "Dongwon Lim",
     "email": "idw111@gmail.com"
   },
-  "repository": "idw111/hangul-disassemble",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idw111/hangul-disassemble.git"
+  },
+  "bugs": {
+    "url": "https://github.com/idw111/hangul-disassemble/issues"
+  },
+  "homepage": "https://github.com/idw111/hangul-disassemble",
   "license": "MIT",
   "files": [
     "index.js"
