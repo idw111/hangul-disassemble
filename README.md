@@ -23,7 +23,7 @@ var hangul = Hangul.disassemble('한글');
 
 ## License
 
-MIT © [Dongwon Lim]()
+MIT © [Dongwon Lim](./LICENSE)
 
 [npm-image]: https://badge.fury.io/js/hangul-disassemble.svg
 [npm-url]: https://npmjs.org/package/hangul-disassemble
