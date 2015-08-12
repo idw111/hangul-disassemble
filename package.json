@@ -1,6 +1,6 @@
 {
   "name": "hangul-disassemble",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "disassemble hangul text to consonants and vowels",
   "author": {
     "name": "Dongwon Lim",
