@@ -14,10 +14,27 @@ $ npm install --save hangul-disassemble
 
 ```js
 var Hangul = require('hangul-disassemble');
+var hangul = null;
 
-var hangul = Hangul.disassemble('한글');
-// hangul[0] === {first: 'ㅎ', vowel: 'ㅏ', last: 'ㄴ'}
-// hangul[1] === {first: 'ㄱ', vowel: 'ㅡ', last: 'ㄹ'}
+// 한글을 초성(first), 중성(vowel), 종성(last)으로 리턴
+hangul = Hangul.disassemble('한글'); // [{first: 'ㅎ', vowel: 'ㅏ', last: 'ㄴ'}, {first: 'ㄱ', vowel: 'ㅡ', last: 'ㄹ'}]
+hangul = Hangul.disassemble('와'); // [{first: 'ㅇ', vowel: 'ㅘ', last: ''}]
+
+// 한글이 아니거나 자음, 모음만 있는 글자는 null 리턴
+hangul = Hangul.disassemble('hi'); // [null, null]
+hangul = Hangul.disassemble('ㅇㅋ'); // [null, null]
+hangul = Hangul.disassemble('h 헐'); // [null, null, {first: 'ㅎ', vowel: 'ㅓ', last: 'ㄹ'}]
+
+// flatten 옵션을 주면 하나의 배열로 리턴
+hangul = Hangul.disassemble('한글', {flatten: true}); // ['ㅎ', 'ㅏ', 'ㄴ', 'ㄱ', 'ㅡ', 'ㄹ'];
+
+// flatten 옵션을 주면 자음, 모음만 있는 글자도 제대로 리턴
+hangul = Hangul.disassemble('ㅇㅋ', {flatten: true}); // ['ㅇ', 'ㅋ'];
+hangul = Hangul.disassemble('h 헐', {flatten: true}); // [null, null, 'ㅎ', 'ㅓ', 'ㄹ'];
+
+// equals 함수로 두 개의 어구가 같은지 비교
+Hangul.equals('구성된다', '구성되ㄴ다'); // true
+Hangul.equals('구성된다', '구성되다'); // false
 ```
 
 

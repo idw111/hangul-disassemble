@@ -1,3 +1,5 @@
+var equals = require('array-equal');
+
 var Hangul = {
 
 	alphabets: [
@@ -6,16 +8,45 @@ var Hangul = {
 		['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
 	],
 
-	disassemble: function(text) {
+	disassemble: function(text, options) {
+		options = options || {};
+		var flatten = options.flatten || false;
 		if (typeof text !== 'string') return null;
 		if (text.length === 0) return null;
-		if (text.length === 1) return [Hangul._disassembleSingleCharacter(text)];
-		return Hangul._disassembleMultipleCharacters(text);
+		return Hangul._disassembleMultipleCharacters(text, flatten);
 	},
 
-	_disassembleSingleCharacter: function(singleCharacter) {
+	equals: function(a, b) {
+		if (a === b) return true;
+		return equals(Hangul.disassemble(a, {flatten: true}), Hangul.disassemble(b, {flatten: true}));
+	},
+
+	isVowel: function(character) {
+		if (!character) return false;
+		for (var i in Hangul.alphabets[1]) {
+			if (character === Hangul.alphabets[1][i]) return true;
+		}
+		return false;
+	},
+
+	isConsonant: function(character) {
+		if (!character) return false;
+		for (var i in Hangul.alphabets[0]) {
+			if (character === Hangul.alphabets[0][i]) return true;
+		}
+		for (var i in Hangul.alphabets[2]) {
+			if (character === Hangul.alphabets[2][i]) return true;
+		}
+		return false;
+
+	},
+
+	_disassembleSingleCharacter: function(singleCharacter, flatten) {
 		var code = singleCharacter.charCodeAt(0);
 		if (code === 32) return null;
+		if (flatten) {
+			if (Hangul.isConsonant(singleCharacter) || Hangul.isVowel(singleCharacter)) return [singleCharacter];
+		}
 		if (code < 0xAC00 || code > 0xD7A3) return null;
 		code = code - 0xAC00;
 
@@ -27,13 +58,23 @@ var Hangul = {
 			vowel: Hangul.alphabets[1][vowel],
 			last: Hangul.alphabets[2][last]
 		};
-		return result;
+
+		if (!flatten) return result;
+
+		var flat = [];
+		if (result.first) flat.push(result.first);
+		if (result.vowel) flat.push(result.vowel);
+		if (result.last) flat.push(result.last);
+
+		return flat;
 	},
 
-	_disassembleMultipleCharacters: function(multipleCharacters) {
+	_disassembleMultipleCharacters: function(multipleCharacters, flatten) {
 		var result = [];
 		for (var i = 0; i < multipleCharacters.length; i++) {
-			result.push(Hangul._disassembleSingleCharacter(multipleCharacters.charAt(i)));
+			var disassembled = Hangul._disassembleSingleCharacter(multipleCharacters.charAt(i), flatten);
+			if (flatten) result = result.concat(disassembled)
+			else result.push(disassembled);
 		}
 		return result;
 	}
