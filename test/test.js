@@ -81,7 +81,7 @@ describe('한글 텍스트 분리', function () {
         expect(disassembled[4]).to.be('ㄹ');
     });
 
-    it('두개의 어구가 같은지 비교할 수 있어야 한다', function() {
+    it('두개의 어구가 같은지 비교할 수 있다', function() {
         var shouldEqual = Hangul.equals('구성된다', '구성되ㄴ다');
         expect(shouldEqual).to.be(true);
         var shouldNotEqual = !Hangul.equals('구성된다', '구성되다');
