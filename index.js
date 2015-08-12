@@ -34,8 +34,8 @@ var Hangul = {
 		for (var i in Hangul.alphabets[0]) {
 			if (character === Hangul.alphabets[0][i]) return true;
 		}
-		for (var i in Hangul.alphabets[2]) {
-			if (character === Hangul.alphabets[2][i]) return true;
+		for (var j in Hangul.alphabets[2]) {
+			if (character === Hangul.alphabets[2][j]) return true;
 		}
 		return false;
 
@@ -73,7 +73,7 @@ var Hangul = {
 		var result = [];
 		for (var i = 0; i < multipleCharacters.length; i++) {
 			var disassembled = Hangul._disassembleSingleCharacter(multipleCharacters.charAt(i), flatten);
-			if (flatten) result = result.concat(disassembled)
+			if (flatten) result = result.concat(disassembled);
 			else result.push(disassembled);
 		}
 		return result;
