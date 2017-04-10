@@ -1,6 +1,6 @@
 {
   "name": "hangul-disassemble",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "disassemble hangul text to consonants and vowels",
   "author": {
     "name": "Dongwon Lim",
@@ -36,6 +36,6 @@
     "time-grunt": "^1.1.0"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "mocha test"
   }
 }

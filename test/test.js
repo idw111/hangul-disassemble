@@ -19,9 +19,11 @@ describe('한글 텍스트 분리', function() {
         expect(Hangul.disassemble(['한글'])).to.be(null);
     });
 
-    it('공백 문자의 경우 그대로 리턴해야 한다', function() {
-        var disassembled = Hangul.disassemble('abc 한글');
+    it('공백 문자나 구두점의 경우 그대로 리턴해야 한다', function() {
+        var disassembled = Hangul.disassemble('abc \',한글');
         expect(disassembled[3]).to.equal(' ');
+        expect(disassembled[4]).to.equal('\'');
+        expect(disassembled[5]).to.equal(',');
     });
 
     it('한글이 아닌 경우 null을 리턴해야 한다', function() {

@@ -52,7 +52,7 @@ var Hangul = {
 
 	_disassembleSingleCharacter: function(singleCharacter, flatten) {
 		var code = singleCharacter.charCodeAt(0);
-		if (code === 32) return singleCharacter;
+		if (code === 32 || code === 39 || code === 44) return singleCharacter;
 		if (flatten) {
 			if (Hangul.isConsonant(singleCharacter) || Hangul.isVowel(singleCharacter)) return [singleCharacter];
 		}
