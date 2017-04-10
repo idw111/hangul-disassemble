@@ -88,4 +88,10 @@ describe('한글 텍스트 분리', function () {
         expect(shouldNotEqual).to.be(true);
     });
 
+    it('한글인지 아닌지 테스트할 수 있다', function() {
+        expect(Hangul.isHangul('한글')).to.be(true);
+        expect(Hangul.isHangul('english')).to.be(false);
+        expect(Hangul.isHangul('한글english')).to.be(true);
+    });
+
 });

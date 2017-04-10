@@ -14,9 +14,21 @@ var Hangul = {
 		return Hangul._disassembleMultipleCharacters(text, flatten);
 	},
 
+	toString: function(text) {
+		return Hangul.disassemble(text, {flatten: true}).join('');
+	},
+
+	isHangul: function(text) {
+		const hangul = Hangul.disassemble(text.replace(/ /g, ''));
+		for (var i in hangul) {
+			if (!!hangul[i]) return true;
+		}
+		return false;
+	},
+
 	equals: function(a, b) {
 		if (a === b) return true;
-		return Hangul.disassemble(a, {flatten: true}).join('') === Hangul.disassemble(b, {flatten: true}).join('');
+		return Hangul.toString(a) === Hangul.toString(b);
 	},
 
 	isVowel: function(character) {
@@ -36,7 +48,6 @@ var Hangul = {
 			if (character === Hangul.alphabets[2][j]) return true;
 		}
 		return false;
-
 	},
 
 	_disassembleSingleCharacter: function(singleCharacter, flatten) {
