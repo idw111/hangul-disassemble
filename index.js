@@ -1,5 +1,3 @@
-var equals = require('array-equal');
-
 var Hangul = {
 
 	alphabets: [
@@ -18,7 +16,7 @@ var Hangul = {
 
 	equals: function(a, b) {
 		if (a === b) return true;
-		return equals(Hangul.disassemble(a, {flatten: true}), Hangul.disassemble(b, {flatten: true}));
+		return Hangul.disassemble(a, {flatten: true}).join('') === Hangul.disassemble(b, {flatten: true}).join('');
 	},
 
 	isVowel: function(character) {
