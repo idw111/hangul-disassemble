@@ -26,11 +26,11 @@ describe('한글 텍스트 분리', function() {
         expect(disassembled[5]).to.equal(',');
     });
 
-    it('한글이 아닌 경우 null을 리턴해야 한다', function() {
+    it('한글이 아닌 경우 그대로 리턴해야 한다', function() {
         var disassembled = Hangul.disassemble('abc 한글');
-        expect(disassembled[0]).to.be(null);
-        expect(disassembled[1]).to.be(null);
-        expect(disassembled[2]).to.be(null);
+        expect(disassembled[0]).to.equal('a');
+        expect(disassembled[1]).to.equal('b');
+        expect(disassembled[2]).to.equal('c');
         expect(disassembled[4]).to.be.an('object');
     });
 
@@ -80,7 +80,7 @@ describe('한글 텍스트 분리', function() {
     it('flatten 옵션을 준 경우, 한글이 아닌 글자는 null을 리턴해야 한다', function() {
         var disassembled = Hangul.disassemble('h 헐', {flatten: true});
         expect(disassembled.length).to.be(5);
-        expect(disassembled[0]).to.be(null);
+        expect(disassembled[0]).to.be('h');
         expect(disassembled[1]).to.be(' ');
         expect(disassembled[2]).to.be('ㅎ');
         expect(disassembled[3]).to.be('ㅓ');
@@ -98,6 +98,7 @@ describe('한글 텍스트 분리', function() {
         expect(Hangul.isHangul('한글')).to.be(true);
         expect(Hangul.isHangul('english')).to.be(false);
         expect(Hangul.isHangul('한글english')).to.be(true);
+        expect(Hangul.isHangul('abcz ㅋㅋㅋ')).to.be(true);
     });
 
 });

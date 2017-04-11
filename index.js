@@ -19,9 +19,10 @@ var Hangul = {
 	},
 
 	isHangul: function(text) {
-		const hangul = Hangul.disassemble(text.replace(/ /g, ''));
+		const hangul = Hangul.disassemble(text.replace(/[a-zA-Z0-9 ]/g, ''));
 		for (var i in hangul) {
-			if (!!hangul[i]) return true;
+			if (typeof hangul[i] === 'object') return true;
+			if (Hangul.isConsonant(hangul[i]) || Hangul.isVowel(hangul[i])) return true;
 		}
 		return false;
 	},
@@ -53,10 +54,11 @@ var Hangul = {
 	_disassembleSingleCharacter: function(singleCharacter, flatten) {
 		var code = singleCharacter.charCodeAt(0);
 		if (code === 32 || code === 39 || code === 44) return singleCharacter;
-		if (flatten) {
-			if (Hangul.isConsonant(singleCharacter) || Hangul.isVowel(singleCharacter)) return [singleCharacter];
+		if (Hangul.isConsonant(singleCharacter) || Hangul.isVowel(singleCharacter)) {
+			if (flatten) return [singleCharacter];
+			else return null;
 		}
-		if (code < 0xAC00 || code > 0xD7A3) return null;
+		if (code < 0xAC00 || code > 0xD7A3) return singleCharacter;
 		code = code - 0xAC00;
 
 		var last = code % 28;
