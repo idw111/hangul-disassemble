@@ -10,7 +10,7 @@ var Hangul = {
 		options = options || {};
 		var flatten = options.flatten || false;
 		if (typeof text !== 'string') return null;
-		if (text.length === 0) return null;
+		if (text.length === 0) return '';
 		return Hangul._disassembleMultipleCharacters(text, flatten);
 	},
 
