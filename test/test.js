@@ -12,8 +12,11 @@ describe('한글 텍스트 분리', function() {
         expect(disassembled[0].last).to.be('ㅇ');
     });
 
-    it('빈문자열이나 문자열이 아닌 경우 null을 리턴해야 한다', function() {
-        expect(Hangul.disassemble('')).to.be(null);
+    it('빈문자열은 그대로 리턴해야 한다', function() {
+        expect(Hangul.disassemble('')).to.be('');
+    });
+
+    it('문자열이 아닌 경우 null을 리턴해야 한다', function() {
         expect(Hangul.disassemble(new Date())).to.be(null);
         expect(Hangul.disassemble({test: '한글'})).to.be(null);
         expect(Hangul.disassemble(['한글'])).to.be(null);
